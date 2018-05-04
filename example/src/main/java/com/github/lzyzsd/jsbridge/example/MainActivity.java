@@ -11,11 +11,12 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.widget.Button;
 
-import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeHandlerManager;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
-import com.google.gson.Gson;
+import com.github.lzyzsd.jsbridge.HandlerMode;
+import com.github.lzyzsd.jsbridge.JavascriptInterface;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -72,30 +73,19 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		webView.loadUrl("file:///android_asset/demo.html");
 
-		webView.registerHandler("submitFromWeb", new BridgeHandler() {
+        BridgeHandlerManager.getInstance().registerHandler(this, webView);
 
-			@Override
-			public void handler(String data, CallBackFunction function) {
-				Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
-                function.onCallBack("submitFromWeb exe, response data 中文 from Java");
-			}
+//		webView.registerHandler("submitFromWeb", new BridgeHandler() {
+//
+//			@Override
+//			public void handler(String data, CallBackFunction function) {
+//				Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
+//                function.onCallBack("submitFromWeb exe, response data 中文 from Java");
+//			}
+//
+//		});
 
-		});
-
-        User user = new User();
-        Location location = new Location();
-        location.address = "SDU";
-        user.location = location;
-        user.name = "大头鬼";
-
-        webView.callHandler("functionInJs", new Gson().toJson(user), new CallBackFunction() {
-            @Override
-            public void onCallBack(String data) {
-
-            }
-        });
-
-        webView.send("hello");
+//        webView.send("hello");
 
 	}
 
@@ -120,17 +110,29 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (button.equals(v)) {
-            webView.callHandler("functionInJs", "data from Java", new CallBackFunction() {
-
+            webView.callHandler("functionInJs", "java数据(data from Java)", new CallBackFunction() {
 				@Override
 				public void onCallBack(String data) {
-					// TODO Auto-generated method stub
-					Log.i(TAG, "reponse data from js " + data);
+					Log.i(TAG, "js回调数据(response data from js)" + data);
 				}
 
 			});
 		}
 
 	}
+
+	public void jump1(View view) {
+        startActivity(new Intent(this, MainIOSActivity.class));
+    }
+
+    @JavascriptInterface({"user","pwd"})
+    public void submitFromWeb(String u, String p) {
+        Log.d("test", "===================================submitFromWeb" + ",u=" + u + ",p=" + p);
+    }
+
+    @JavascriptInterface(handlerMode = HandlerMode.SEND)
+    public void hello() {
+        Log.d("test", "===================================hello");
+    }
 
 }

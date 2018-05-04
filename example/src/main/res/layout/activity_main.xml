@@ -11,6 +11,12 @@
         android:text="@string/button_name"
         android:layout_height="48dp"
         />
+    <Button
+        android:onClick="jump1"
+        android:layout_width="match_parent"
+        android:text="跳转到iOS demo测试"
+        android:layout_height="48dp"
+        />
     
     <!-- webview 演示web调用Java -->
     <com.github.lzyzsd.jsbridge.BridgeWebView

@@ -4,6 +4,11 @@
         <title>
             js调用java
         </title>
+
+        <script type="text/javascript" src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
+        <script>
+            var vConsole = new VConsole();
+        </script>
     </head>
     
     <body>
@@ -41,6 +46,7 @@
             document.getElementById("show").innerHTML = document.getElementsByTagName("html")[0].innerHTML;
         }
 
+        <!--js发送消息-->
         function testClick() {
             var str1 = document.getElementById("text1").value;
             var str2 = document.getElementById("text2").value;
