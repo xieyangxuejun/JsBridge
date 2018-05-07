@@ -111,6 +111,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if (button.equals(v)) {
             webView.callHandler("functionInJs", "java数据(data from Java)", new CallBackFunction() {
+
 				@Override
 				public void onCallBack(String data) {
 					Log.i(TAG, "js回调数据(response data from js)" + data);
@@ -125,14 +126,18 @@ public class MainActivity extends Activity implements OnClickListener {
         startActivity(new Intent(this, MainIOSActivity.class));
     }
 
+	@JavascriptInterface()
+	public void submitFromWeb(String model) {
+		Log.d("test", "===================================submitFromWeb" + model /*+ model.getData()*/);
+	}
+
     @JavascriptInterface({"user","pwd"})
-    public void submitFromWeb(String u, String p) {
-        Log.d("test", "===================================submitFromWeb" + ",u=" + u + ",p=" + p);
-    }
+	public void submitFromWeb11(String u, String p) {
+		Log.d("test", "===================================submitFromWeb" + ",u=" + u + ",p=" + p);
+	}
 
     @JavascriptInterface(handlerMode = HandlerMode.SEND)
-    public void hello() {
-        Log.d("test", "===================================hello");
+    public void hello(String data) {
+        Log.d("test", "===================================hello" + data);
     }
-
 }

@@ -35,6 +35,10 @@
             />
         </p>
         <p>
+            <input type="button" id="enter11" value="调用Native有参数的方法" onclick="testClick11();"
+            />
+        </p>
+        <p>
             <input type="button" id="enter2" value="显示html" onclick="testDiv();" />
         </p>
         <p>
@@ -62,6 +66,7 @@
 
         }
 
+        //调用无参数的方法
         function testClick1() {
             var str1 = document.getElementById("text1").value;
             var str2 = document.getElementById("text2").value;
@@ -69,7 +74,22 @@
             //call native method
             window.WebViewJavascriptBridge.callHandler(
                 'submitFromWeb'
-                , {'param': '中文测试'}
+                , {'user': str1, 'pwd': str2}
+                , function(responseData) {
+                    document.getElementById("show").innerHTML = "send get responseData from java, data = " + responseData
+                }
+            );
+        }
+
+        //调用有参数的方法
+        function testClick11() {
+            var str1 = document.getElementById("text1").value;
+            var str2 = document.getElementById("text2").value;
+
+            //call native method
+            window.WebViewJavascriptBridge.callHandler(
+                'submitFromWeb11'
+                , {'user': str1, 'pwd': str2}
                 , function(responseData) {
                     document.getElementById("show").innerHTML = "send get responseData from java, data = " + responseData
                 }
