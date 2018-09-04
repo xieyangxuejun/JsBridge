@@ -30,11 +30,11 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	ValueCallback<Uri> mUploadMessage;
 
-    static class Location {
+    public static class Location {
         String address;
     }
 
-    static class User {
+    public static class User {
         String name;
         Location location;
         String testStr;
